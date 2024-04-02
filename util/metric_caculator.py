@@ -14,7 +14,7 @@ class MetricCalculator:
     ) -> Metrics :
         rmse = self._calc_rmse(true_rating, pred_rating)
         precision_at_k = self._calc_precision_at_k(true_user2items, pred_user2items, k)
-        recall_at_k = self._calc_recall_At_k(true_user2items, pred_user2items, k)
+        recall_at_k = self._calc_recall_at_k(true_user2items, pred_user2items, k)
         return Metrics(rmse, precision_at_k, recall_at_k)
 
 
@@ -32,15 +32,15 @@ class MetricCalculator:
         return r_at_k
 
     def _calc_rmse(self, true_rating: List[float], pred_rating: List[float]) -> float :
-        return np.sqrt(mean_squared_error(tru_rating, pred_rating))
+        return np.sqrt(mean_squared_error(true_rating, pred_rating))
 
-    def _calc_recall_at_k(self, true_rating: List[float], pred_rating : List[float]) -> float:
+    def _calc_recall_at_k(self, true_user2items: Dict[int, List[int]], pred_user2items : Dict[int, List[int]], k : int) -> float:
         scores = []
 
         for user_id in true_user2items.keys():
             r_at_k = self._recall_at_k(true_user2items[user_id], pred_user2items[user_id], k)
             scores.append(r_at_k)
-        return np.mena(scores)
+        return np.mean(scores)
 
     def _calc_precision_at_k(self, true_user2items: Dict[int, List[int]], pred_user2items: Dict[int, List[int]], k : int) -> float:
         scores = []

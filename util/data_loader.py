@@ -3,12 +3,10 @@ import os
 from util.models import Dataset # todo create
 
 class DataLoader:
-    def __init__(self, num_users: int = 1000, num_test_items: int = 5, data_path: str = "../dataset/ml-10M100K/movies.dat"):
+    def __init__(self, num_users: int = 1000, num_test_items: int = 5, data_path: str = "../dataset/ml-10M100K/"):
         self.num_users = num_users
         self.num_test_items = num_test_items
-        self.data_path : data_path
-
-    
+        self.data_path = data_path
 
     # data loading
     def load(self) -> Dataset:
@@ -35,8 +33,9 @@ class DataLoader:
 
     def _load(self) -> (pd.DataFrame, pd.DataFrame):
         m_cols = ["movie_id", "title", "genre"]
+        print("pwd :: " + self.data_path + "movies.dat")
         movies = pd.read_csv(
-            os.path.join(selr.data_path, "movie.dat"), names=m_cols, sep="::", encoding="latin-1", engine="python"
+            os.path.join(self.data_path, "movies.dat"), names=m_cols, sep="::", encoding="latin-1", engine="python"
         )
 
         movies["genre"] = movies.genre.apply(lambda x : list(x.split("|")))
@@ -58,6 +57,6 @@ class DataLoader:
 
         ratings = ratings[ratings.user_id <= max(valid_user_ids)]
 
-        movielens_ratings = ratings.merge(movie, on="movie_id")
+        movielens_ratings = ratings.merge(movies, on="movie_id")
         return movielens_ratings, movies
         
