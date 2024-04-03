@@ -16,7 +16,7 @@ np.random.seed(0)
 # 임계값 200 result
 # rmse=1.081672, Precision@K= 0.133696, recall@K=0.042
 # 임계값 10 reuslt
-# 
+# rmse=1.081672, Precision@K= 0.039130, recall@K=0.014
 # 임계값 100 result
 # rmse=1.081672, Precision@K= 0.080435, recall@K=0.027
 
